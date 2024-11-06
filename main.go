@@ -36,7 +36,7 @@ func main() {
 	db.SetMaxOpenConns(200)
 
 	http.Handle("POST /clientes/{id}/transacoes", depositHandler(db))
-	http.Handle("GET /clients/{id}/transacoes", getExtrato(db))
+	http.Handle("GET /clientes/{id}/extrato", getExtrato(db))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
