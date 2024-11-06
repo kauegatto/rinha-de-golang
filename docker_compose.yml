@@ -15,7 +15,6 @@ services:
       - '5432:5432'
     volumes:
       - ./config/database/schema.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./config/database/postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf
     command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
     deploy:
       resources:
