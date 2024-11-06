@@ -7,24 +7,29 @@ import (
 )
 
 type Payment struct {
-	Valor     int64  `json:"valor"`
-	Tipo      string `json:"tipo"`
-	Descricao string `json:"descricao"`
-	CriadoEm  time.Time
+	Value       int64  `json:"valor"`
+	Type        string `json:"tipo"`
+	Description string `json:"descricao"`
+	CreatedAt   time.Time
 }
 
-func (p Payment) Validar(saldo int64) (valor int64, error error) {
-	if p.Tipo != "c" && p.Tipo != "d" {
-		return 0, fmt.Errorf("invalid type %s should be either p or s", p.Tipo)
+func (p Payment) ValidateAndReturnNewBalance(balance int64) (valor int64, error error) {
+	if p.Type != "c" && p.Type != "d" {
+		return 0, fmt.Errorf("invalid type %s should be either p or s", p.Type)
 	}
 
-	if len(p.Descricao) > 10 {
+	if len(p.Description) > 10 {
 		return 0, errors.New("description should not be longer than 10 characters")
 	}
 
-	newBalance := p.Valor - saldo
+	if p.Type == "d" {
+		p.Value = p.Value * -1
+	}
+
+	newBalance := balance + p.Value
+
 	if newBalance < 0 {
-		return 0, fmt.Errorf("would let inconsistant amount (negative): %d", p.Valor)
+		return 0, fmt.Errorf("would let inconsistant amount (negative): %d", p.Value)
 	}
 
 	return newBalance, nil

@@ -110,14 +110,14 @@ func depositHandler(db *sql.DB) http.Handler {
 				return
 			}
 
-			newBalance, err := payment.Validar(client.Balance)
+			newBalance, err := payment.ValidateAndReturnNewBalance(client.Balance)
 
 			if err != nil {
 				w.WriteHeader(422)
 			}
 
 			// todo update newbalance
-			_, err = db.Exec("INSERT INTO transactions (client_id, amount, operation, description) VALUES ($1, $2, $3, $4);", id, payment.Valor, payment.Tipo, payment.Descricao)
+			_, err = db.Exec("INSERT INTO transactions (client_id, amount, operation, description) VALUES ($1, $2, $3, $4);", id, payment.Value, payment.Type, payment.Description)
 
 			if err != nil {
 
