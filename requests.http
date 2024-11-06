@@ -1,16 +1,17 @@
-POST http://localhost:8080/clientes/123/transacoes HTTP/1.1
+####
+POST http://localhost:8080/clientes/1/transacoes HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+    "valor": 1000,
+    "tipo": "c",
+    "descricao": "first test" 
 }
 
-####
-POST http://localhost:8080/clientes/123/transacoes HTTP/1.1
+#### Cliente Válido
+GET http://localhost:8080/clientes/1/extrato HTTP/1.1
 content-type: application/json
 
-{
-    "nme": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
-}a
+#### Cliente Invalido
+GET http://localhost:8080/clientes/123/extrato HTTP/1.1
+content-type: application/json

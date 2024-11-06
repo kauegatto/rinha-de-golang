@@ -11,15 +11,19 @@ import (
 	"time"
 
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	godotenv.Load()
+
 	connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_NAME"),
 	)
+
 	db, err := sql.Open("pgx", connStr)
 
 	if err != nil {
@@ -79,7 +83,6 @@ func getExtrato(db *sql.DB) http.Handler {
 		jsonResponse, err := json.Marshal(&response)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			fmt.Println(err)
 			fmt.Fprint(w, err.Error())
 			return
 		}
@@ -142,6 +145,7 @@ func getClientById(id string, db *sql.DB) (models.Client, error) {
 	var balance int64
 	err := rows.Scan(&id, &accountLimit, &balance)
 	if err != nil {
+		fmt.Printf("error: %s", err)
 		return models.Client{}, err
 	}
 
