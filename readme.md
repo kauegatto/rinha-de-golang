@@ -1,5 +1,6 @@
 # Rinha de Backend - 2024/Q1
-
+## Instruções:
+`docker-compose up`
 ## Repo  original:
 https://github.com/zanfranceschi/rinha-de-backend-2024-q1
 

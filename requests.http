@@ -3,8 +3,8 @@ POST http://localhost:9999/clientes/1/transacoes HTTP/1.1
 content-type: application/json
 
 {
-    "valor": 1000,
-    "tipo": "c",
+    "valor": 1250,
+    "tipo": "d",
     "descricao": "first test" 
 }
 
