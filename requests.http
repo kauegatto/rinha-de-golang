@@ -1,5 +1,5 @@
 ####
-POST http://localhost:8080/clientes/1/transacoes HTTP/1.1
+POST http://localhost:9999/clientes/1/transacoes HTTP/1.1
 content-type: application/json
 
 {
@@ -9,9 +9,9 @@ content-type: application/json
 }
 
 #### Cliente Válido
-GET http://localhost:8080/clientes/1/extrato HTTP/1.1
+GET http://localhost:9999/clientes/1/extrato HTTP/1.1
 content-type: application/json
 
 #### Cliente Invalido
-GET http://localhost:8080/clientes/123/extrato HTTP/1.1
+GET http://localhost:9999/clientes/123/extrato HTTP/1.1
 content-type: application/json
