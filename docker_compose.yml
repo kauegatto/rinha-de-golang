@@ -15,12 +15,12 @@ services:
       - '5432:5432'
     volumes:
       - ./config/database/schema.sql:/docker-entrypoint-initdb.d/init.sql
-    command: postgres
+    command: postgres -c shared_buffers=40MB
     deploy:
       resources:
         limits:
           cpus: '1'
-          memory: '300MB'
+          memory: '240MB'
 
   api01: &api
     build:
@@ -39,8 +39,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.10'
-          memory: '20MB'
+          cpus: '0.25'
+          memory: '55MB'
     networks:
       - default
   api02:
@@ -60,7 +60,7 @@ services:
       resources:
         limits:
           cpus: '0.1'
-          memory: '70MB'
+          memory: '60MB'
 
 networks:
   default:
