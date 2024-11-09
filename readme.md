@@ -1,4 +1,10 @@
 # Rinha de Backend - 2024/Q1
+## Melhores Resultados (Atualizado)
+![graficos respose time](./best_results/response_time.png)
+
+![graficos por tempo de exec](./best_results/graficos.png)
+
+'best_results/graphical.png'
 ## Instruções:
 `docker-compose up`
 ## Repo  original:
