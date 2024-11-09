@@ -1,11 +1,11 @@
 # Use este script para executar testes locais
 
 $RESULTS_WORKSPACE = "$(Get-Location)\load-test\user-files\results"
-$GATLING_BIN_DIR = "$env:GATLING_HOME\bin"
+$GATLING_BIN_DIR = "$env:GATLING_HOME"
 $GATLING_WORKSPACE = "$(Get-Location)\load-test\user-files"
 
 function Run-Gatling {
-    & "$GATLING_BIN_DIR\gatling.bat" -rm local -s RinhaBackendCrebitosSimulation `
+    & "$GATLING_BIN_DIR\mvnw.cmd gatling:test" -rm local -s RinhaBackendCrebitosSimulation `
         -rd "Rinha de Backend - 2024/Q1: Crébito" `
         -rf $RESULTS_WORKSPACE `
         -sf "$GATLING_WORKSPACE/simulations"

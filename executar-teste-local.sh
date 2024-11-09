@@ -1,14 +1,15 @@
+#!/bin/sh
+
 # Use este script para executar testes locais
 
 RESULTS_WORKSPACE="$(pwd)/load-test/user-files/results"
-GATLING_BIN_DIR=$HOME/gatling/bin
 GATLING_WORKSPACE="$(pwd)/load-test/user-files"
+GATLING_DIR=$HOME/gatling/gatling-charts-highcharts-bundle-3.12.0
+    
 
 runGatling() {
-    sh $GATLING_BIN_DIR/gatling.sh -rm local -s RinhaBackendCrebitosSimulation \
-        -rd "Rinha de Backend - 2024/Q1: Crébito" \
-        -rf $RESULTS_WORKSPACE \
-        -sf "$GATLING_WORKSPACE/simulations"
+     $GATLING_DIR/mvnw gatling:test \
+        -DsimulationsFolder="$GATLING_WORKSPACE/simulations"
 }
 
 startTest() {

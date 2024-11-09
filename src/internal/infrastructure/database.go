@@ -21,7 +21,7 @@ func NewDBConnection() (*sql.DB, error) {
 		return nil, fmt.Errorf("unable to connect to database: %v", err)
 	}
 
-	db.SetMaxOpenConns(50)
-	db.SetMaxIdleConns(50)
+	db.SetMaxOpenConns(75)
+	db.SetMaxIdleConns(75)
 	return db, nil
 }
