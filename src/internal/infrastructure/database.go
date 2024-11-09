@@ -22,8 +22,8 @@ func NewDBConnection() (*pgxpool.Pool, error) {
 		return nil, fmt.Errorf("failed to parse config: %v", err)
 	}
 
-	config.MaxConns = 25
-	config.MinConns = 24
+	config.MaxConns = 12
+	config.MinConns = 11
 
 	pool, err := pgxpool.NewWithConfig(context.Background(), config)
 	if err != nil {
