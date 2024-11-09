@@ -2,27 +2,28 @@ package postgres
 
 import (
 	"context"
-	"database/sql"
 	"rinha_backend/internal/domain/models"
+
+	"github.com/jackc/pgx"
 )
 
 type TransactionRepository struct {
-	db *sql.DB
+	db *pgx.ConnPool
 }
 
-func NewTransactionRepository(db *sql.DB) *TransactionRepository {
+func NewTransactionRepository(db *pgx.ConnPool) *TransactionRepository {
 	return &TransactionRepository{db: db}
 }
 
 func (r *TransactionRepository) Create(ctx context.Context, clientID string, transaction models.Transaction) error {
-	_, err := r.db.ExecContext(ctx,
+	_, err := r.db.Exec(
 		"INSERT INTO transactions (client_id, amount, operation, description) VALUES ($1, $2, $3, $4)",
 		clientID, transaction.Amount, transaction.Operation, transaction.Description)
 	return err
 }
 
 func (r *TransactionRepository) GetLastTenByClientID(ctx context.Context, clientID string) ([]models.Transaction, error) {
-	rows, err := r.db.QueryContext(ctx,
+	rows, err := r.db.Query(
 		"SELECT amount, operation, description, created_at FROM transactions WHERE client_id = $1 ORDER BY created_at DESC LIMIT 10",
 		clientID)
 	if err != nil {
