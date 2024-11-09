@@ -1,32 +1,33 @@
 package infrastructure
 
 import (
+	"context"
 	"fmt"
 	"os"
 
-	"github.com/jackc/pgx"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func NewDBConnection() (*pgx.ConnPool, error) {
-	connStr := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable",
-		os.Getenv("DB_HOST"),
+func NewDBConnection() (*pgxpool.Pool, error) {
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:5432/%s?sslmode=disable",
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_HOST"),
 		os.Getenv("DB_NAME"),
 	)
-	connConfig, err := pgx.ParseURI(connStr)
+
+	// Create config with default values
+	config, err := pgxpool.ParseConfig(connStr)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to parse uri to pgx ConnectionConfig")
+		return nil, fmt.Errorf("failed to parse config: %v", err)
 	}
 
-	poolConfig := &pgx.ConnPoolConfig{
-		ConnConfig:     connConfig,
-		MaxConnections: 80,
-	}
-	conn, err := pgx.NewConnPool(*poolConfig)
+	config.MaxConns = 80
+
+	pool, err := pgxpool.NewWithConfig(context.Background(), config)
 	if err != nil {
-		return nil, fmt.Errorf("unable to connect to database: %v", err)
+		return nil, fmt.Errorf("unable to create connection pool: %v", err)
 	}
 
-	return conn, nil
+	return pool, nil
 }
